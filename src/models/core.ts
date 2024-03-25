@@ -18,3 +18,16 @@ export const Languages: LanguagesObject = {
     flagCode: 'de' // flag code
   }
 };
+
+export interface CsvAsJson {
+  [key: string]: string | number;
+}
+
+export interface MappedCsvToJson {
+  header: string[];
+  data: CsvAsJson[];
+}
+
+export interface TableMetaData {
+  name: string
+}

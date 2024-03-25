@@ -15,17 +15,27 @@
             class="text-4xl">
             {{ currentTableStore.currentTableMetaData.name }}
           </div>
-          <div v-else>
-            <InputText
-              class="rounded-br-none rounded-tr-none"
-              v-model="newFileName" />
-            <Button
-              class="rounded-bl-none rounded-tl-none"
-              size="large"
-              :disabled="!isNewFileNameInputValid"
-              @click="setEditTableNameInputVisibility(false)">
-              <FontAwesomeIcon icon="save" />
-            </Button>
+          <div
+            class="flex flex-col"
+            v-else>
+            <div class="flex flex-row">
+              <InputText
+                class="rounded-br-none rounded-tr-none"
+                :invalid="!isNewFileNameInputValid"
+                v-model="newFileName"
+                aria-describedby="filename-help"/>
+              <Button
+                class="rounded-bl-none rounded-tl-none"
+                size="large"
+                :disabled="!isNewFileNameInputValid"
+                @click="setEditTableNameInputVisibility(false)">
+                <FontAwesomeIcon icon="save" />
+              </Button>
+            </div>
+            <small
+              v-if="!isNewFileNameInputValid"
+              class="text-red-500 mt-2 ml-2"
+              id="filename-help">Provided filename is invalid</small>
           </div>
           <div v-if="!isEditTableNameInputVisible">
             <FontAwesomeIcon

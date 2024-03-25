@@ -12,11 +12,14 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     name: '',
   });
 
-
+  const processFileRenaming = (filename: string) => {
+    currentTableMetaData.value.name = filename;
+  };
 
   return {
     currentCsvHeader,
     currentCsvData,
-    currentTableMetaData
+    currentTableMetaData,
+    processFileRenaming
   };
 });

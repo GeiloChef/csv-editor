@@ -4,10 +4,36 @@
     :value="currentCsvData"
     dataKey="uuid_for_edition"
     editMode="cell"
+    :exportFilename="currentTableStore.currentTableMetaData.name"
     @cell-edit-complete="onCellEditComplete"
     tableStyle="min-width: 50rem">
     <template #header>
-      <div class="flex flex-row justify-end">
+      <div class="flex flex-row justify-between items-center my-6">
+        <div class="flex flex-row gap-4 items-center">
+          <div
+            v-if="!isEditTableNameInputVisible"
+            class="text-4xl">
+            {{ currentTableStore.currentTableMetaData.name }}
+          </div>
+          <div v-else>
+            <InputText
+              class="rounded-br-none rounded-tr-none"
+              v-model="newFileName" />
+            <Button
+              class="rounded-bl-none rounded-tl-none"
+              size="large"
+              :disabled="!isNewFileNameInputValid"
+              @click="setEditTableNameInputVisibility(false)">
+              <FontAwesomeIcon icon="save" />
+            </Button>
+          </div>
+          <div v-if="!isEditTableNameInputVisible">
+            <FontAwesomeIcon
+              class="cursor-pointer"
+              icon="pen"
+              @click="setEditTableNameInputVisibility(true)"/>
+          </div>
+        </div>
         <Button
           size="small"
           @click="exportCSV()">
@@ -35,13 +61,16 @@
 </template>
 
 <script setup lang="ts">
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import { storeToRefs } from 'pinia';
   import Column from 'primevue/column';
   import DataTable, { type DataTableCellEditCompleteEvent } from 'primevue/datatable';
+  import InputText from 'primevue/inputtext';
   import Textarea from 'primevue/textarea';
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
 
   import { useCurrentTableStore } from '@/stores/currentTableStore';
+  import { isValidFileName } from '@/utils/FileUtils';
 
   const currentTableStore = useCurrentTableStore();
   const { currentCsvData, currentCsvHeader } = storeToRefs(currentTableStore);
@@ -53,6 +82,21 @@
   const CsvDataTable_Ref = ref();
   const exportCSV = () => {
     CsvDataTable_Ref.value.exportCSV();
+  };
+
+  const isEditTableNameInputVisible = ref(false);
+  const newFileName = ref('');
+  const isNewFileNameInputValid = computed((): boolean => {
+    return isValidFileName(newFileName.value);
+  });
+  const setEditTableNameInputVisibility = (visible: boolean) => {
+    isEditTableNameInputVisible.value = visible;
+
+    if (visible) {
+      newFileName.value = currentTableStore.currentTableMetaData.name;
+    } else {
+      currentTableStore.processFileRenaming(newFileName.value.trimStart());
+    }
   };
 
 </script>

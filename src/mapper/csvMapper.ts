@@ -74,17 +74,17 @@ export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
 
   if (!rows || !headers) return undefined;
 
-  const jsonData: CsvRowAsJson[] = rows.map(csvRow => {
-    const obj: CsvRowAsJson = {
+  const csvAsJson: CsvRowAsJson[] = rows.map(csvRow => {
+    const rowObject: CsvRowAsJson = {
       uuid_for_edition: uuidv4()
     };
 
     headers.forEach((header, index) => {
-      obj[header] = csvRow[index];
+      rowObject[header] = csvRow[index];
     });
 
-    return obj;
+    return rowObject;
   });
 
-  return { header: headers, data: jsonData };
+  return { header: headers, data: csvAsJson };
 };

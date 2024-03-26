@@ -19,15 +19,24 @@ export const Languages: LanguagesObject = {
   }
 };
 
-export interface CsvAsJson {
+export interface CsvRowAsJson {
+  uuid_for_edition: string,
   [key: string]: string | number;
 }
 
 export interface MappedCsvToJson {
   header: string[];
-  data: CsvAsJson[];
+  data: CsvRowAsJson[];
 }
 
 export interface TableMetaData {
   name: string
+}
+export enum RowActions {
+  DeleteRow = 'DELETE_ROW'
+}
+export interface TableRowAction {
+  name: string,
+  icon: string,
+  action: RowActions
 }

@@ -1,10 +1,12 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faFloppyDisk,
-  faPen
+  faPen,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faFloppyDisk,
-  faPen
+  faPen,
+  faTrash
 );

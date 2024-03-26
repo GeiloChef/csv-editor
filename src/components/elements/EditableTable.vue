@@ -51,6 +51,18 @@
         </Button>
       </div>
     </template>
+    <Column header="action">
+      <template #body="{ data }">
+        <div class="flex flex-row gap-2">
+          <FontAwesomeIcon
+            v-for="action in rowActions"
+            :key="action.action"
+            :icon="action.icon"
+            class="cursor-pointer"
+            @click="triggerRowAction(action.action, data)"/>
+        </div>
+      </template>
+    </Column>
     <Column
       class="max-w-72"
       v-for="field in currentCsvHeader"
@@ -77,8 +89,9 @@
   import DataTable, { type DataTableCellEditCompleteEvent } from 'primevue/datatable';
   import InputText from 'primevue/inputtext';
   import Textarea from 'primevue/textarea';
-  import { computed, ref } from 'vue';
+  import { computed, type Ref, ref } from 'vue';
 
+  import { type CsvRowAsJson, RowActions, type TableRowAction } from '@/models/core';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
   import { isValidFileName } from '@/utils/FileUtils';
 
@@ -109,6 +122,20 @@
     }
   };
 
+  const rowActions: Ref<TableRowAction[]> = ref([
+    {
+      name: 'delete-row',
+      icon: 'trash',
+      action: RowActions.DeleteRow
+    }
+  ]);
+
+  const triggerRowAction = (action: RowActions, row: CsvRowAsJson): void => {
+    switch (action) {
+      case RowActions.DeleteRow:
+        currentTableStore.deleteRowFromCurrentTableData(row);
+    }
+  };
 </script>
 
 

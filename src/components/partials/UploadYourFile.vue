@@ -25,8 +25,6 @@
   import { uploadFile } from '@/utils/FileUtils';
 
   const onUploadCsv = (event: FileUploadUploadEvent) => {
-    console.log(event);
-
     if (Array.isArray(event.files)) {
       uploadFile(event.files[0]);
     } else {

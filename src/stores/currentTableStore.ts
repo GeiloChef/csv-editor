@@ -28,7 +28,8 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     const deepCopiedRow = JSON.parse(JSON.stringify(row));
 
     deepCopiedRow.uuid_for_edition = uuidv4();
-    currentCsvData.value.push(deepCopiedRow);
+    rowInformationDialogStore.currentRowInformation = deepCopiedRow;
+    rowInformationDialogStore.isRowInformationDialogVisible = true;
   };
 
   const openNewRowDialog = (): void => {

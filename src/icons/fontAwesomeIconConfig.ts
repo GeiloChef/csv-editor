@@ -3,12 +3,14 @@ import {
   faFloppyDisk,
   faPen,
   faTrash,
-  faFileCirclePlus
+  faFileCirclePlus,
+  faCopy
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faFloppyDisk,
   faPen,
   faTrash,
-  faFileCirclePlus
+  faFileCirclePlus,
+  faCopy
 );

@@ -139,16 +139,25 @@
 
   const rowActions: Ref<TableRowAction[]> = ref([
     {
+      name: 'copy-row',
+      icon: 'copy',
+      action: RowActions.CopyRow
+    },
+    {
       name: 'delete-row',
       icon: 'trash',
       action: RowActions.DeleteRow
-    }
+    },
   ]);
 
   const triggerRowAction = (action: RowActions, row: CsvRowAsJson): void => {
     switch (action) {
       case RowActions.DeleteRow:
         currentTableStore.deleteRowFromCurrentTableData(row);
+        break;
+      case RowActions.CopyRow:
+        currentTableStore.copyExistingRow(row);
+        break;
     }
   };
 

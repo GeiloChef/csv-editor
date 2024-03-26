@@ -86,19 +86,24 @@ export const getFilenameWithoutExtension = (filename: string): string => {
  * console.log(isValidFileName(""));
  */
 export const isValidFileName = (filename: string): boolean => {
-  const filenameRegex = /^[^<>:;,?"*|\/]+$/;
+  const filenameRegex = /^[^<>:;,?"*|/]+$/;
 
   return filename.length > 0 && filenameRegex.test(filename);
 };
 
+/**
+ * @description creates an empty object fitting the given headers and scheme of the current table
+ * @param headers {string[]}
+ * @returns CsvRowAsJson - Object matching the scheme of the current table
+ */
 export const createEmptyRowFromHeaders = (headers: string[]): CsvRowAsJson => {
-  const obj: CsvRowAsJson = {
+  const emptyTableRow: CsvRowAsJson = {
     uuid_for_edition: uuidv4()
   };
 
-  headers.forEach((header, index) => {
-    obj[header] = '';
+  headers.forEach((header) => {
+    emptyTableRow[header] = '';
   });
 
-  return obj;
+  return emptyTableRow;
 };

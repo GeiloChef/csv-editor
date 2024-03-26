@@ -4,6 +4,9 @@
     :value="currentCsvData"
     dataKey="uuid_for_edition"
     editMode="cell"
+    paginator
+    :rows="5"
+    :rowsPerPageOptions="[5, 10, 20, 50]"
     :exportFilename="currentTableStore.currentTableMetaData.name"
     @cell-edit-complete="onCellEditComplete"
     tableStyle="min-width: 50rem">
@@ -156,6 +159,7 @@
       command: () => currentTableStore.resetCurrentTableStore()
     }
   ]);
+
 </script>
 
 

@@ -41,6 +41,7 @@ export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
           }
 
         case ',':
+        case ';':
           row.push(field.trim());
           field = '';
           break;

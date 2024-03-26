@@ -33,7 +33,6 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
   };
 
   const openNewRowDialog = (): void => {
-    console.log('add new row');
     rowInformationDialogStore.initiateEmptyRow(currentCsvHeader.value);
     rowInformationDialogStore.isRowInformationDialogVisible = true;
   };

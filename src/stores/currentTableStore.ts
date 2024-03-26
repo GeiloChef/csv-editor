@@ -20,11 +20,20 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     currentCsvData.value = currentCsvData.value.filter((existingRow) => existingRow.uuid_for_edition !== row.uuid_for_edition);
   };
 
+  const resetCurrentTableStore = (): void => {
+    currentCsvHeader.value = [];
+    currentCsvData.value = [];
+    currentTableMetaData.value = {
+      name: ''
+    };
+  };
+
   return {
     currentCsvHeader,
     currentCsvData,
     currentTableMetaData,
     processFileRenaming,
-    deleteRowFromCurrentTableData
+    deleteRowFromCurrentTableData,
+    resetCurrentTableStore
   };
 });

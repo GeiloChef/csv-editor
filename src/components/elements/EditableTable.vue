@@ -44,11 +44,22 @@
               @click="setEditTableNameInputVisibility(true)"/>
           </div>
         </div>
-        <Button
-          size="small"
-          @click="exportCSV()">
-          {{ $t('export-table') }}
-        </Button>
+        <div class="flex flex-row gap-4">
+          <SplitButton
+            :label="$t('table-actions')"
+            :model="tableActions">
+            <template #menuitemicon="{ item }">
+              <FontAwesomeIcon
+                :icon="item.icon"
+                class="pr-2" />
+            </template>
+          </SplitButton>
+          <Button
+            size="small"
+            @click="exportCSV()">
+            {{ $t('export-table') }}
+          </Button>
+        </div>
       </div>
     </template>
     <Column header="action">
@@ -88,10 +99,11 @@
   import Column from 'primevue/column';
   import DataTable, { type DataTableCellEditCompleteEvent } from 'primevue/datatable';
   import InputText from 'primevue/inputtext';
+  import SplitButton from 'primevue/splitbutton';
   import Textarea from 'primevue/textarea';
   import { computed, type Ref, ref } from 'vue';
 
-  import { type CsvRowAsJson, RowActions, type TableRowAction } from '@/models/core';
+  import { type CsvRowAsJson, RowActions, type TableAction, type TableRowAction } from '@/models/core';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
   import { isValidFileName } from '@/utils/FileUtils';
 
@@ -136,6 +148,14 @@
         currentTableStore.deleteRowFromCurrentTableData(row);
     }
   };
+
+  const tableActions: Ref<TableAction[]> = ref([
+    {
+      label: 'create-new-table',
+      icon: 'file-circle-plus',
+      command: () => currentTableStore.resetCurrentTableStore()
+    }
+  ]);
 </script>
 
 

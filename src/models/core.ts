@@ -40,3 +40,8 @@ export interface TableRowAction {
   icon: string,
   action: RowActions
 }
+
+export interface TableAction {
+  label: string,
+  command: () => void
+}

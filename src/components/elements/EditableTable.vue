@@ -1,15 +1,17 @@
 <template>
   <DataTable
     ref="CsvDataTable_Ref"
+    tableStyle="min-width: 50rem"
     :value="currentCsvData"
     dataKey="uuid_for_edition"
     editMode="cell"
+    stripedRows
     paginator
     :rows="5"
     :rowsPerPageOptions="[5, 10, 20, 50]"
     :exportFilename="currentTableStore.currentTableMetaData.name"
     @cell-edit-complete="onCellEditComplete"
-    tableStyle="min-width: 50rem">
+    @page="setCurrentPageInformation">
     <template #header>
       <div class="flex flex-row justify-between items-center my-6">
         <div class="flex flex-row gap-4 items-center">
@@ -77,6 +79,11 @@
         </div>
       </template>
     </Column>
+    <Column header="index">
+      <template #body="{ index }">
+        {{ index + 1 + firstItemIndexOnPage }}
+      </template>
+    </Column>
     <Column
       class="max-w-72"
       v-for="field in currentCsvHeader"
@@ -100,7 +107,7 @@
   import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
   import { storeToRefs } from 'pinia';
   import Column from 'primevue/column';
-  import DataTable, { type DataTableCellEditCompleteEvent } from 'primevue/datatable';
+  import DataTable, { type DataTableCellEditCompleteEvent, type DataTablePageEvent } from 'primevue/datatable';
   import InputText from 'primevue/inputtext';
   import SplitButton from 'primevue/splitbutton';
   import Textarea from 'primevue/textarea';
@@ -120,6 +127,11 @@
   const CsvDataTable_Ref = ref();
   const exportCSV = () => {
     CsvDataTable_Ref.value.exportCSV();
+  };
+
+  const firstItemIndexOnPage: Ref<number> = ref(0);
+  const setCurrentPageInformation = (event: DataTablePageEvent) => {
+    firstItemIndexOnPage.value = event.first;
   };
 
   const isEditTableNameInputVisible = ref(false);

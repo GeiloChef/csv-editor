@@ -178,7 +178,12 @@
       label: 'create-new-table',
       icon: 'file-circle-plus',
       command: () => currentTableStore.resetCurrentTableStore()
-    }
+    },
+    {
+      label: 'add-new-row',
+      icon: 'diagram-predecessor',
+      command: () => currentTableStore.openNewRowDialog()
+    },
   ]);
 
 </script>

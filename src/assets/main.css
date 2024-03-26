@@ -58,6 +58,14 @@ html {
         background-color: #878787;
     }
 }
-
-
 /* End of custom scrollbar */
+
+.p-dialog-header {
+    border-color: var(--primary-color);
+    border-style: solid;
+    @apply border-b
+}
+
+.p-dialog-content {
+    @apply pt-8
+}

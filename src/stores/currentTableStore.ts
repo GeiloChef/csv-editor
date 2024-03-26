@@ -4,8 +4,11 @@ import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 
 import type { CsvRowAsJson, TableMetaData } from '@/models/core';
+import { useRowInformationDialogStore } from '@/stores/rowInfomationDialogStore';
 
 export const useCurrentTableStore = defineStore('currentTable', () => {
+  const rowInformationDialogStore = useRowInformationDialogStore();
+
   const currentCsvHeader: RemovableRef<string[]> = useLocalStorage('currentCsvHeader', []);
   const currentCsvData: RemovableRef<CsvRowAsJson[]> = useLocalStorage('currentCsvData', []);
 
@@ -28,6 +31,18 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     currentCsvData.value.push(deepCopiedRow);
   };
 
+  const openNewRowDialog = (): void => {
+    console.log('add new row');
+    rowInformationDialogStore.initiateEmptyRow(currentCsvHeader.value);
+    rowInformationDialogStore.isRowInformationDialogVisible = true;
+  };
+
+  const addNewRow = (row: CsvRowAsJson): void => {
+    const deepCopiedRow = JSON.parse(JSON.stringify(row));
+
+    currentCsvData.value.push(deepCopiedRow);
+  };
+
   const resetCurrentTableStore = (): void => {
     currentCsvHeader.value = [];
     currentCsvData.value = [];
@@ -43,6 +58,8 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     processFileRenaming,
     copyExistingRow,
     deleteRowFromCurrentTableData,
-    resetCurrentTableStore
+    resetCurrentTableStore,
+    openNewRowDialog,
+    addNewRow
   };
 });

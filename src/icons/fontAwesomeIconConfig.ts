@@ -4,7 +4,8 @@ import {
   faPen,
   faTrash,
   faFileCirclePlus,
-  faCopy
+  faCopy,
+  faDiagramPredecessor,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -12,5 +13,6 @@ library.add(
   faPen,
   faTrash,
   faFileCirclePlus,
-  faCopy
+  faCopy,
+  faDiagramPredecessor,
 );

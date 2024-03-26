@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { createPinia } from 'pinia';
 import Button from 'primevue/button';
 import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 import { createApp } from 'vue';
 
 
@@ -25,5 +26,6 @@ app.use(createPinia());
 app.use(i18n);
 app.use(router);
 app.use(PrimeVue);
+app.use(ToastService);
 
 app.mount('#app');

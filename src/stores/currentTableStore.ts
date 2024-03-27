@@ -3,13 +3,13 @@ import { useLocalStorage } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 
-import type { CsvRowAsJson, TableMetaData } from '@/models/core';
+import type { CsvHeaderAsJson, CsvRowAsJson, TableMetaData } from '@/models/core';
 import { useRowInformationDialogStore } from '@/stores/rowInfomationDialogStore';
 
 export const useCurrentTableStore = defineStore('currentTable', () => {
   const rowInformationDialogStore = useRowInformationDialogStore();
 
-  const currentCsvHeader: RemovableRef<string[]> = useLocalStorage('currentCsvHeader', []);
+  const currentCsvHeader: RemovableRef<CsvHeaderAsJson[]> = useLocalStorage('currentCsvHeader', []);
   const currentCsvData: RemovableRef<CsvRowAsJson[]> = useLocalStorage('currentCsvData', []);
 
   const currentTableMetaData: RemovableRef<TableMetaData> = useLocalStorage('currentTableMetaData', {
@@ -25,10 +25,10 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
   };
 
   const copyExistingRow = (row: CsvRowAsJson): void => {
-    const deepCopiedRow = JSON.parse(JSON.stringify(row));
+    const copiedRow = { ...row };
 
-    deepCopiedRow.uuid_for_edition = uuidv4();
-    rowInformationDialogStore.currentRowInformation = deepCopiedRow;
+    copiedRow.uuid_for_edition = uuidv4();
+    rowInformationDialogStore.currentRowInformation = copiedRow;
     rowInformationDialogStore.isRowInformationDialogVisible = true;
   };
 
@@ -38,9 +38,9 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
   };
 
   const addNewRow = (row: CsvRowAsJson): void => {
-    const deepCopiedRow = JSON.parse(JSON.stringify(row));
+    const copiedRow = { ...row };
 
-    currentCsvData.value.push(deepCopiedRow);
+    currentCsvData.value.push(copiedRow);
   };
 
   const resetCurrentTableStore = (): void => {

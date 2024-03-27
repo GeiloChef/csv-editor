@@ -87,8 +87,9 @@
     <Column
       class="max-w-72"
       v-for="field in currentCsvHeader"
-      :field="field"
-      :header="field">
+      :field="field.uuid_for_edition"
+      sortable
+      :header="field.label">
       <template #body="{ data, field }">
         <div class="truncate">
           {{ data[field] }}

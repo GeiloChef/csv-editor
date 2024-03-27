@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import type { CsvRowAsJson, MappedCsvToJson } from '@/models/core';
+import type { CsvHeaderAsJson, CsvRowAsJson, MappedCsvToJson } from '@/models/core';
 
 /**
  * This method turns a csv passed as string into a valid json.
@@ -70,9 +70,18 @@ export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
     rows.push(row);
   }
 
-  const headers: string[] | undefined = rows.shift();
+  const headersAsString: string[] | undefined = rows.shift();
 
-  if (!rows || !headers) return undefined;
+
+  if (!rows || !headersAsString) return undefined;
+
+  const headers: CsvHeaderAsJson[] = headersAsString.map((headerName: string) => {
+    return {
+      uuid_for_edition: uuidv4(),
+      label: headerName
+    };
+  });
+
 
   const csvAsJson: CsvRowAsJson[] = rows.map(csvRow => {
     const rowObject: CsvRowAsJson = {
@@ -80,7 +89,7 @@ export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
     };
 
     headers.forEach((header, index) => {
-      rowObject[header] = csvRow[index];
+      rowObject[header.uuid_for_edition] = csvRow[index];
     });
 
     return rowObject;

@@ -19,13 +19,18 @@ export const Languages: LanguagesObject = {
   }
 };
 
+export interface CsvHeaderAsJson {
+  uuid_for_edition: string,
+  label: string
+}
+
 export interface CsvRowAsJson {
   uuid_for_edition: string,
   [key: string]: string | number;
 }
 
 export interface MappedCsvToJson {
-  header: string[];
+  header: CsvHeaderAsJson[];
   data: CsvRowAsJson[];
 }
 

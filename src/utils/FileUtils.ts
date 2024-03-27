@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { mapCsvToJson } from '@/mapper/csvMapper';
-import type { CsvRowAsJson, MappedCsvToJson } from '@/models/core';
+import type { CsvHeaderAsJson, CsvRowAsJson, MappedCsvToJson } from '@/models/core';
 import { useCurrentTableStore } from '@/stores/currentTableStore';
 
 /**
@@ -96,13 +96,13 @@ export const isValidFileName = (filename: string): boolean => {
  * @param headers {string[]}
  * @returns CsvRowAsJson - Object matching the scheme of the current table
  */
-export const createEmptyRowFromHeaders = (headers: string[]): CsvRowAsJson => {
+export const createEmptyRowFromHeaders = (headers: CsvHeaderAsJson[]): CsvRowAsJson => {
   const emptyTableRow: CsvRowAsJson = {
     uuid_for_edition: uuidv4()
   };
 
   headers.forEach((header) => {
-    emptyTableRow[header] = '';
+    emptyTableRow[header.uuid_for_edition] = '';
   });
 
   return emptyTableRow;

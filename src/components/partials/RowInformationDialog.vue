@@ -11,13 +11,13 @@
       <div
         class="flex flex-row justify-center items-center gap-6"
         v-for="header in currentCsvHeader"
-        :key="header">
+        :key="header.uuid_for_edition">
         <span class="w-1/2 text-lg">
-          {{header}}
+          {{ header.label }}
         </span>
         <InputText
           type="text"
-          v-model="currentRowInformation[header]" />
+          v-model="currentRowInformation[header.uuid_for_edition]" />
       </div>
     </div>
     <div class="absolute bottom-0 left-0 bottom-action-button-color w-full flex justify-center items-center h-20 border-t">

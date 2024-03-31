@@ -43,6 +43,10 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     currentCsvData.value.push(copiedRow);
   };
 
+  const renameColumn = (column: CsvHeaderAsJson, newName: string): void => {
+    column.label = newName;
+  };
+
   const resetCurrentTableStore = (): void => {
     currentCsvHeader.value = [];
     currentCsvData.value = [];
@@ -60,6 +64,7 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     deleteRowFromCurrentTableData,
     resetCurrentTableStore,
     openNewRowDialog,
-    addNewRow
+    addNewRow,
+    renameColumn
   };
 });

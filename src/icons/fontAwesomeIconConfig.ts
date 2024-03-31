@@ -6,6 +6,7 @@ import {
   faFileCirclePlus,
   faCopy,
   faDiagramPredecessor,
+  faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -15,4 +16,5 @@ library.add(
   faFileCirclePlus,
   faCopy,
   faDiagramPredecessor,
+  faEllipsisVertical,
 );

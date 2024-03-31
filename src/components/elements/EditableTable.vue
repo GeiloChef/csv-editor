@@ -66,6 +66,7 @@
           </Button>
         </div>
       </div>
+      <EditColumOverlayPanel ref="EditColumnOverlayPanel_Ref" />
     </template>
     <Column header="action">
       <template #body="{ data }">
@@ -88,8 +89,24 @@
       class="max-w-72"
       v-for="field in currentCsvHeader"
       :field="field.uuid_for_edition"
-      sortable
-      :header="field.label">
+      :exportHeader="field.label">
+      <template #header>
+        <div class="flex flex-row h-full w-full justify-between items-center">
+          <span>
+            {{ field.label }}
+          </span>
+          <div class="ml-4 h-full flex items-center justify-center">
+            <Button
+              text
+              severity="secondary"
+              @click="($event) => triggerEditColumnOverlay($event, field)">
+              <FontAwesomeIcon
+                class="cursor-pointer"
+                icon="ellipsis-vertical"/>
+            </Button>
+          </div>
+        </div>
+      </template>
       <template #body="{ data, field }">
         <div class="truncate">
           {{ data[field] }}
@@ -114,9 +131,19 @@
   import Textarea from 'primevue/textarea';
   import { computed, type Ref, ref } from 'vue';
 
-  import { type CsvRowAsJson, RowActions, type TableAction, type TableRowAction } from '@/models/core';
+  import EditColumOverlayPanel from '@/components/partials/EditColumOverlayPanel.vue';
+  import {
+    type CsvHeaderAsJson,
+    type CsvRowAsJson,
+    RowActions,
+    type TableAction,
+    type TableRowAction
+  } from '@/models/core';
+  import { useColumnEditStore } from '@/stores/columnEditStore';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
   import { isValidFileName } from '@/utils/FileUtils';
+
+  const columnEditStore = useColumnEditStore();
 
   const currentTableStore = useCurrentTableStore();
   const { currentCsvData, currentCsvHeader } = storeToRefs(currentTableStore);
@@ -126,7 +153,7 @@
   };
 
   const CsvDataTable_Ref = ref();
-  const exportCSV = () => {
+  const exportCSV = (): void => {
     CsvDataTable_Ref.value.exportCSV();
   };
 
@@ -187,6 +214,13 @@
     },
   ]);
 
+  const EditColumnOverlayPanel_Ref: Ref<typeof EditColumOverlayPanel | null> = ref(null);
+  const triggerEditColumnOverlay = (event: Event, column: CsvHeaderAsJson) => {
+    if (EditColumnOverlayPanel_Ref.value) {
+      columnEditStore.setCurrentColumnToEdit(column);
+      EditColumnOverlayPanel_Ref.value.setOverlayVisibility(true, event);
+    }
+  };
 </script>
 
 

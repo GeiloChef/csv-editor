@@ -1,0 +1,13 @@
+{
+  "test": "test",
+  "action": "Action",
+  "index": "Index",
+  "table-actions": "Edit table",
+  "export-table": "Export table",
+  "edit-column": "Edit Column",
+  "change-column-name": "Edit Column Name",
+  "save": "Save",
+  "create-new-table": "Start with a new Table",
+  "add-new-row": "Add a new row",
+  "upload-file": "Upload file"
+}

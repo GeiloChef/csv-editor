@@ -7,6 +7,7 @@
       <FileUpload
         name="csvUpload"
         mode="basic"
+        :choose-label="$t('upload-file')"
         class="w-64"
         @uploader="onUploadCsv($event)"
         :multiple="false"

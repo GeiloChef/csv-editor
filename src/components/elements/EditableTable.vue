@@ -68,7 +68,7 @@
       </div>
       <EditColumOverlayPanel ref="EditColumnOverlayPanel_Ref" />
     </template>
-    <Column header="action">
+    <Column :header="$t('action')">
       <template #body="{ data }">
         <div class="flex flex-row gap-2">
           <FontAwesomeIcon
@@ -80,7 +80,7 @@
         </div>
       </template>
     </Column>
-    <Column header="index">
+    <Column :header="$t('index')" >
       <template #body="{ index }">
         {{ index + 1 + firstItemIndexOnPage }}
       </template>
@@ -130,6 +130,7 @@
   import SplitButton from 'primevue/splitbutton';
   import Textarea from 'primevue/textarea';
   import { computed, type Ref, ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
   import EditColumOverlayPanel from '@/components/partials/EditColumOverlayPanel.vue';
   import {
@@ -144,6 +145,8 @@
   import { isValidFileName } from '@/utils/FileUtils';
 
   const columnEditStore = useColumnEditStore();
+
+  const { t } = useI18n();
 
   const currentTableStore = useCurrentTableStore();
   const { currentCsvData, currentCsvHeader } = storeToRefs(currentTableStore);
@@ -211,12 +214,12 @@
 
   const tableActions: Ref<TableAction[]> = ref([
     {
-      label: 'create-new-table',
+      label: t('create-new-table'),
       icon: 'file-circle-plus',
       command: () => currentTableStore.resetCurrentTableStore()
     },
     {
-      label: 'add-new-row',
+      label: t('add-new-row'),
       icon: 'diagram-predecessor',
       command: () => currentTableStore.openNewRowDialog()
     },

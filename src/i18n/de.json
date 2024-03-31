@@ -1,3 +1,13 @@
 {
-  "test": "test"
+  "test": "test",
+  "action": "Aktion",
+  "index": "Index",
+  "table-actions": "Tabelle bearbeiten",
+  "export-table": "Tabelle exportieren",
+  "edit-column": "Spalte bearbeiten",
+  "change-column-name": "Spaltenname bearbeiten",
+  "save": "Speichern",
+  "create-new-table": "Mit neuer Tabelle starten",
+  "add-new-row": "Neue Reihe einfügen",
+  "upload-file": "Datei auswählen"
 }

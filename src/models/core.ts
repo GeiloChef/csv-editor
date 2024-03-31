@@ -33,9 +33,15 @@ export const Languages: LanguagesObject = {
   }
 };
 
+export enum ColumnType {
+  Number = 'NUMBER',
+  Text = 'Text'
+}
+
 export interface CsvHeaderAsJson {
   uuid_for_edition: string,
-  label: string
+  label: string,
+  columnType: ColumnType,
 }
 
 export interface CsvRowAsJson {

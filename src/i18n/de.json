@@ -9,5 +9,8 @@
   "save": "Speichern",
   "create-new-table": "Mit neuer Tabelle starten",
   "add-new-row": "Neue Reihe einfügen",
-  "upload-file": "Datei auswählen"
+  "upload-file": "Datei auswählen",
+  "change-column-type": "Spaltentyp ändern",
+  "text": "Text",
+  "number": "Nummer"
 }

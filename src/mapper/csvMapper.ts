@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import type { CsvHeaderAsJson, CsvRowAsJson, MappedCsvToJson } from '@/models/core';
+import { ColumnType } from '@/models/core';
 
 /**
  * This method turns a csv passed as string into a valid json.
@@ -78,7 +79,8 @@ export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
   const headers: CsvHeaderAsJson[] = headersAsString.map((headerName: string) => {
     return {
       uuid_for_edition: uuidv4(),
-      label: headerName
+      label: headerName,
+      columnType: ColumnType.Text
     };
   });
 

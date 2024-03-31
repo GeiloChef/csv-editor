@@ -26,6 +26,18 @@
           </Button>
         </div>
       </div>
+
+      <Divider />
+      <div class="flex flex-col gap-2">
+        <div>
+          {{ $t('change-column-type') }}
+        </div>
+        <Dropdown
+          v-model="currentColumnToEdit.columnType"
+          :options="columnTypesDropdownOptions"
+          optionLabel="name"
+          optionValue="value"/>
+      </div>
     </div>
   </OverlayPanel>
 </template>
@@ -34,15 +46,20 @@
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
   import Divider from 'primevue/divider';
+  import Dropdown from 'primevue/dropdown';
   import InputText from 'primevue/inputtext';
   import OverlayPanel from 'primevue/overlaypanel';
-  import { onMounted, type Ref, ref, watch } from 'vue';
+  import { computed, onMounted, type Ref, ref, watch } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
+  import { ColumnType } from '@/models/core';
   import { useColumnEditStore } from '@/stores/columnEditStore';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
 
   const columnEditStore = useColumnEditStore();
   const { currentColumnToEdit } = storeToRefs(columnEditStore);
+
+  const { t } = useI18n();
 
   const currentTableStore = useCurrentTableStore();
 
@@ -78,6 +95,19 @@
 
     newColumnName.value = currentColumnToEdit.value.label;
   };
+
+  const columnTypesDropdownOptions = computed(() => {
+    return [
+      {
+        name: t('number'),
+        value: ColumnType.Number
+      },
+      {
+        name: t('text'),
+        value: ColumnType.Text
+      },
+    ];
+  });
 
   watch(currentColumnToEdit, () => {
     setupOverlayPanel();

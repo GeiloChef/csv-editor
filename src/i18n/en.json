@@ -9,5 +9,8 @@
   "save": "Save",
   "create-new-table": "Start with a new Table",
   "add-new-row": "Add a new row",
-  "upload-file": "Upload file"
+  "upload-file": "Upload file",
+  "change-column-type": "Change Column Type",
+  "text": "Text",
+  "number": "Number"
 }

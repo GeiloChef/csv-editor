@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 permissions:
   contents: write
@@ -21,11 +21,11 @@ jobs:
       - name: Build website
         run: |
           npm install --non-interactive
-          npm run build
+          npm run build-only
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
-          folder: docs/.vitepress/dist
+          folder: dist
           clean: true
           clean-exclude: |
             "CNAME"

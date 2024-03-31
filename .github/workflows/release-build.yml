@@ -24,10 +24,3 @@ jobs:
           npm run build-only
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
-        with:
-          folder: docs/.vitepress/dist
-          clean: true
-          clean-exclude: |
-            "CNAME"
-            ".gitattributes"
-          single-commit: true

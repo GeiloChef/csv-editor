@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 
 import type { CsvHeaderAsJson, CsvRowAsJson, TableMetaData } from '@/models/core';
+import { RowActions } from '@/models/core';
 import { useRowInformationDialogStore } from '@/stores/rowInfomationDialogStore';
 
 export const useCurrentTableStore = defineStore('currentTable', () => {
@@ -28,19 +29,33 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     const copiedRow = { ...row };
 
     copiedRow.uuid_for_edition = uuidv4();
-    rowInformationDialogStore.currentRowInformation = copiedRow;
-    rowInformationDialogStore.isRowInformationDialogVisible = true;
+    rowInformationDialogStore.initiateWithExistingRow(copiedRow, RowActions.CopyRow);
+  };
+
+  const editExistingRow = (row: CsvRowAsJson): void => {
+    const copiedRow = { ...row };
+
+    rowInformationDialogStore.initiateWithExistingRow(copiedRow, RowActions.EditRow);
   };
 
   const openNewRowDialog = (): void => {
-    rowInformationDialogStore.initiateEmptyRow(currentCsvHeader.value);
-    rowInformationDialogStore.isRowInformationDialogVisible = true;
+    const newEmptyRow = rowInformationDialogStore.initiateEmptyRow(currentCsvHeader.value);
+
+    rowInformationDialogStore.initiateWithExistingRow(newEmptyRow, RowActions.NewRow);
   };
 
   const addNewRow = (row: CsvRowAsJson): void => {
     const copiedRow = { ...row };
 
     currentCsvData.value.push(copiedRow);
+  };
+
+  const storeEditedExistingRow = (editedRow: CsvRowAsJson): void => {
+    const foundRowToUpdate = currentCsvData.value.find((existingRow: CsvRowAsJson) => existingRow.uuid_for_edition === editedRow.uuid_for_edition);
+
+    if (foundRowToUpdate) {
+      Object.assign(foundRowToUpdate, editedRow);
+    }
   };
 
   const renameColumn = (column: CsvHeaderAsJson, newName: string): void => {
@@ -61,10 +76,12 @@ export const useCurrentTableStore = defineStore('currentTable', () => {
     currentTableMetaData,
     processFileRenaming,
     copyExistingRow,
+    editExistingRow,
     deleteRowFromCurrentTableData,
     resetCurrentTableStore,
     openNewRowDialog,
     addNewRow,
-    renameColumn
+    renameColumn,
+    storeEditedExistingRow
   };
 });

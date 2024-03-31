@@ -6,7 +6,7 @@
     position="top"
     class="overflow-hidden"
     content-class="mb-20"
-    header="Add new row">
+    :header="dialogHeader">
     <div class="flex flex-col gap-6 px-12">
       <div
         class="flex flex-row justify-center items-center gap-6"
@@ -22,8 +22,8 @@
     </div>
     <div class="absolute bottom-0 left-0 bottom-action-button-color w-full flex justify-center items-center h-20 border-t">
       <Button
-        label="add-row"
-        @click="addNewRow" />
+        :label="callToActionButtonLabel"
+        @click="triggerAction" />
     </div>
   </Dialog>
 </template>
@@ -36,14 +36,66 @@
 
   const toast = useToast();
 
+  import { computed } from 'vue';
+
+  import { RowActions } from '@/models/core';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
   import { useRowInformationDialogStore } from '@/stores/rowInfomationDialogStore';
 
   const rowInformationDialogStore = useRowInformationDialogStore();
-  const { isRowInformationDialogVisible, currentRowInformation } = storeToRefs(rowInformationDialogStore);
+  const { isRowInformationDialogVisible, currentRowInformation, rowAction } = storeToRefs(rowInformationDialogStore);
 
   const currentTableStore = useCurrentTableStore();
   const { currentCsvHeader } = storeToRefs(currentTableStore);
+
+  const dialogHeader = computed((): string => {
+    switch (rowAction.value) {
+      case RowActions.EditRow:
+        return 'edit-row';
+      case RowActions.CopyRow:
+        return 'copy-row-content';
+      case RowActions.NewRow:
+        return 'insert-new-row';
+      default:
+        return 'save';
+    }
+  });
+
+  const callToActionButtonLabel = computed((): string => {
+    switch (rowAction.value) {
+      case RowActions.EditRow:
+        return 'edit-row';
+      case RowActions.CopyRow:
+        return 'insert-row';
+      case RowActions.NewRow:
+        return 'insert-new-row';
+      default:
+        return 'save';
+    }
+  });
+
+  const triggerAction = (): void => {
+    switch (rowAction.value) {
+      case RowActions.EditRow:
+        editExistingRow();
+        break;
+      case RowActions.CopyRow:
+        addNewRow();
+        break;
+      case RowActions.NewRow:
+        addNewRow();
+        break;
+      default:
+        return;
+    }
+  };
+
+  const editExistingRow = (): void => {
+    currentTableStore.storeEditedExistingRow(currentRowInformation.value);
+
+    toast.add({ severity: 'success', summary: 'row-edited', detail: 'row-edited-successfully', life: 3000 });
+    isRowInformationDialogVisible.value = false;
+  };
 
   const addNewRow = (): void => {
     currentTableStore.addNewRow(currentRowInformation.value);

@@ -179,6 +179,11 @@
 
   const rowActions: Ref<TableRowAction[]> = ref([
     {
+      name: 'edit-row',
+      icon: 'pen',
+      action: RowActions.EditRow
+    },
+    {
       name: 'copy-row',
       icon: 'copy',
       action: RowActions.CopyRow
@@ -197,6 +202,9 @@
         break;
       case RowActions.CopyRow:
         currentTableStore.copyExistingRow(row);
+        break;
+      case RowActions.EditRow:
+        currentTableStore.editExistingRow(row);
         break;
     }
   };

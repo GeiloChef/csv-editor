@@ -39,7 +39,9 @@ export interface TableMetaData {
 }
 export enum RowActions {
   DeleteRow = 'DELETE_ROW',
-  CopyRow = 'COPY_ROW'
+  CopyRow = 'COPY_ROW',
+  EditRow = 'Edit_ROW',
+  NewRow = 'NEW_ROW',
 }
 export interface TableRowAction {
   name: string,

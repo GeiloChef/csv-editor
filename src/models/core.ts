@@ -74,7 +74,17 @@ export interface TableAction {
   command: () => void
 }
 
+export enum CellDelimiter {
+  AutoDetection = 'AUTO_DETECTION',
+  Semicolon = 'SEMICOLON',
+  Comma = 'COMMA',
+  Custom = 'CUSTOM'
+}
+
 export interface FileImportSettings {
   useCustomFileName: boolean,
   customFileName: '',
+  cellDelimiter: CellDelimiter,
+  customDelimiter: string,
 }
+

@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { mapCsvToJson } from '@/mapper/csvMapper';
 import type { CsvHeaderAsJson, CsvRowAsJson, FileImportSettings, MappedCsvToJson } from '@/models/core';
+import { CellDelimiter } from '@/models/core';
 import { useCurrentTableStore } from '@/stores/currentTableStore';
 
 /**
@@ -13,7 +14,7 @@ export const importFile = (file: File, importSettings: FileImportSettings): void
   const reader = new FileReader();
 
   reader.onload = (): void => {
-    const mappedCsv: MappedCsvToJson | undefined = mapCsvToJson(reader.result as string);
+    const mappedCsv: MappedCsvToJson | undefined = mapCsvToJson(reader.result as string, importSettings);
 
     if (mappedCsv) {
       const currentTableStore = useCurrentTableStore();
@@ -111,6 +112,8 @@ export const createEmptyRowFromHeaders = (headers: CsvHeaderAsJson[]): CsvRowAsJ
 export const initiateFileImportSettings = (): FileImportSettings => {
   return {
     useCustomFileName: false,
-    customFileName: ''
+    customFileName: '',
+    cellDelimiter: CellDelimiter.AutoDetection,
+    customDelimiter: ''
   };
 };

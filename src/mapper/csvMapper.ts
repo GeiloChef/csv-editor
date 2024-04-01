@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import type { CsvHeaderAsJson, CsvRowAsJson, MappedCsvToJson } from '@/models/core';
-import { ColumnType } from '@/models/core';
+import type { CsvHeaderAsJson, CsvRowAsJson, FileImportSettings, MappedCsvToJson } from '@/models/core';
+import { CellDelimiter, ColumnType } from '@/models/core';
 
 /**
  * This method turns a csv passed as string into a valid json.
@@ -10,7 +10,20 @@ import { ColumnType } from '@/models/core';
  * @param csv {string} - content of a csv file
  * @return literate Object with header as keys
  */
-export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
+export const mapCsvToJson = (csv: string, importSettings: FileImportSettings): MappedCsvToJson | undefined => {
+  let defaultDelimiter1 = ';';
+  let defaultDelimiter2 = ',';
+
+  if (importSettings.cellDelimiter === CellDelimiter.Semicolon) {
+    defaultDelimiter2 = '';
+  } else if (importSettings.cellDelimiter === CellDelimiter.Comma) {
+    defaultDelimiter1 = '';
+  } else if (importSettings.cellDelimiter === CellDelimiter.Custom) {
+    defaultDelimiter1 = importSettings.customDelimiter;
+    defaultDelimiter2 = '';
+  }
+
+
   const rows: string[][] = [];
   let row: string[] = [];
   let field: string = '';
@@ -41,8 +54,8 @@ export const mapCsvToJson = (csv: string): MappedCsvToJson | undefined => {
             break;
           }
 
-        case ',':
-        case ';':
+        case defaultDelimiter1:
+        case defaultDelimiter2:
           row.push(field.trim());
           field = '';
           break;

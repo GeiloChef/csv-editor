@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { mapCsvToJson } from '@/mapper/csvMapper';
-import type { CsvHeaderAsJson, CsvRowAsJson, MappedCsvToJson } from '@/models/core';
+import type { CsvHeaderAsJson, CsvRowAsJson, FileImportSettings, MappedCsvToJson } from '@/models/core';
 import { useCurrentTableStore } from '@/stores/currentTableStore';
 
 /**
- * @description Takes a file from the user upload and get it's content
+ * @description Imports a csv file into the web application so the user can interact with its data
  * @param file - {File}
  * @return {string} - The content of the file
  */
-export const uploadFile = (file: File): void => {
+export const importFile = (file: File, importSettings: FileImportSettings): void => {
   const reader = new FileReader();
 
   reader.onload = (): void => {
@@ -21,10 +21,10 @@ export const uploadFile = (file: File): void => {
       currentTableStore.currentCsvHeader = mappedCsv.header;
       currentTableStore.currentCsvData = mappedCsv.data;
 
-      if (file.name) {
+      if (importSettings.useCustomFileName) {
+        currentTableStore.currentTableMetaData.name = importSettings.customFileName;
+      } else {
         currentTableStore.currentTableMetaData.name = getFilenameWithoutExtension(file.name);
-      } else  {
-        currentTableStore.currentTableMetaData.name = 'Your New Table';
       }
     }
   };
@@ -106,4 +106,11 @@ export const createEmptyRowFromHeaders = (headers: CsvHeaderAsJson[]): CsvRowAsJ
   });
 
   return emptyTableRow;
+};
+
+export const initiateFileImportSettings = (): FileImportSettings => {
+  return {
+    useCustomFileName: false,
+    customFileName: ''
+  };
 };

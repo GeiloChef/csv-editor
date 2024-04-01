@@ -1,6 +1,6 @@
 
 <template>
-  <main>
+  <main class="w-screen h-screen">
     <UploadYourFile v-if="!currentCsvHeader.length && !currentCsvData.length" />
     <CsvEditArea v-else />
   </main>

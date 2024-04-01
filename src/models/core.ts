@@ -73,3 +73,8 @@ export interface TableAction {
   label: string,
   command: () => void
 }
+
+export interface FileImportSettings {
+  useCustomFileName: boolean,
+  customFileName: '',
+}

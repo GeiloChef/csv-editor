@@ -35,8 +35,10 @@
   import { useToast } from 'primevue/usetoast';
 
   const toast = useToast();
+  const { t } = useI18n();
 
   import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
   import { RowActions } from '@/models/core';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
@@ -51,26 +53,26 @@
   const dialogHeader = computed((): string => {
     switch (rowAction.value) {
       case RowActions.EditRow:
-        return 'edit-row';
+        return t('edit-row');
       case RowActions.CopyRow:
-        return 'copy-row-content';
+        return t('copy-row-content');
       case RowActions.NewRow:
-        return 'insert-new-row';
+        return t('insert-new-row');
       default:
-        return 'save';
+        return t('save');
     }
   });
 
   const callToActionButtonLabel = computed((): string => {
     switch (rowAction.value) {
       case RowActions.EditRow:
-        return 'edit-row';
+        return t('edit-row');
       case RowActions.CopyRow:
-        return 'insert-row';
+        return t('insert-row');
       case RowActions.NewRow:
-        return 'insert-new-row';
+        return t('insert-new-row');
       default:
-        return 'save';
+        return t('save');
     }
   });
 
@@ -93,13 +95,13 @@
   const editExistingRow = (): void => {
     currentTableStore.storeEditedExistingRow(currentRowInformation.value);
 
-    toast.add({ severity: 'success', summary: 'row-edited', detail: 'row-edited-successfully', life: 3000 });
+    toast.add({ severity: 'success', summary: t('row-edited'), detail: t('row-edited-successfully'), life: 3000 });
     isRowInformationDialogVisible.value = false;
   };
 
   const addNewRow = (): void => {
     currentTableStore.addNewRow(currentRowInformation.value);
-    toast.add({ severity: 'success', summary: 'row-added', detail: 'row-added-successfully', life: 3000 });
+    toast.add({ severity: 'success', summary: t('row-added'), detail: t('row-added-successfully'), life: 3000 });
     isRowInformationDialogVisible.value = false;
   };
 </script>

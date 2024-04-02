@@ -1,61 +1,26 @@
-# csv-editor
+# Vue 3 CSV Editor
 
-This template should help get you started developing with Vue 3 in Vite.
+This Editor lets you easily edit your CSV and export it when you're done editing.
+No Data is uploaded to any server, everything is handled locally. 
 
-## Recommended IDE Setup
+>Please make sure your CSV is fitting the RFC 4180 common format!
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Where can I now edit my CSV File?
 
-## Type Support for `.vue` Imports in TS
+You can either make use of the deployed version on GitHub pages, or you deploy it yourself!
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## About the Application
 
-## Customize configuration
+It's written in Vue 3 with typescript. Everything you do is handled locally. The CSV will be
+locally processed during the import. 
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## What dependencies does it take?
 
-## Project Setup
+As you can also check in the `package.json` I used the following dependencies to develop 
+this editor:
+ - FontAwesome Icons (For icons obviously )
+ - Pinia (To have the processed data in a central place)
+ - VueUse Core (For keeping the Pinia Store in the local storage)
+ - PrimeVue (Because it has really awesome components)
+ - uuid (I'll let you guess why...)
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```

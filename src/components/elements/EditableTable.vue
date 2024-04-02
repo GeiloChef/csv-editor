@@ -60,7 +60,6 @@
             </template>
           </SplitButton>
           <Button
-            size="small"
             @click="exportCSV()">
             {{ $t('export-table') }}
           </Button>

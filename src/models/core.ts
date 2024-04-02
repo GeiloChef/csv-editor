@@ -86,5 +86,6 @@ export interface FileImportSettings {
   customFileName: '',
   cellDelimiter: CellDelimiter,
   customDelimiter: string,
+  firstRowAreHeaders: boolean
 }
 

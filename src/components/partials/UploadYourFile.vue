@@ -65,6 +65,19 @@
               type="text" />
           </div>
         </div>
+
+        <!--    First Row Headers    -->
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row gap-2 items-center">
+            <div class="text-lg">
+              {{ $t('first-row-are-headers') }}
+              <!--              <FontAwesomeIcon
+                icon="question-circle"
+                class="cursor-pointer" />-->
+            </div>
+            <InputSwitch v-model="fileImportSettings.firstRowAreHeaders" />
+          </div>
+        </div>
       </div>
       <template #footer>
         <Button

@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
+import { i18n } from '@/i18n/config';
 import type { CsvHeaderAsJson, CsvRowAsJson, FileImportSettings, MappedCsvToJson } from '@/models/core';
 import { CellDelimiter, ColumnType } from '@/models/core';
 
@@ -84,10 +85,27 @@ export const mapCsvToJson = (csv: string, importSettings: FileImportSettings): M
     rows.push(row);
   }
 
-  const headersAsString: string[] | undefined = rows.shift();
+
+  let headersAsString: string[] | undefined = [];
+
+  /**
+   * If the user selected, that the first row contains the header of the table, we take the first row and user them as an
+   * array of strings. If the user selected, that the first row are not the headers, we just push as many empty strings in the
+   * header array so the user can later name the columns himself.
+   */
+  if (importSettings.firstRowAreHeaders) {
+    headersAsString = rows.shift();
+  } else {
+    const t = i18n.global.t;
+
+    headersAsString =  rows[0].map((item: string, index: number) => {
+      return `${t('column')}-${index}`;
+    });
+  }
 
 
   if (!rows || !headersAsString) return undefined;
+
 
   const headers: CsvHeaderAsJson[] = headersAsString.map((headerName: string) => {
     return {

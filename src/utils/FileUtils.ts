@@ -114,6 +114,7 @@ export const initiateFileImportSettings = (): FileImportSettings => {
     useCustomFileName: false,
     customFileName: '',
     cellDelimiter: CellDelimiter.AutoDetection,
-    customDelimiter: ''
+    customDelimiter: '',
+    firstRowAreHeaders: true
   };
 };

@@ -1,6 +1,8 @@
 <template>
   <!--  Used to show global messages to  -->
-  <div :key="selectedLanguage.i18nLocale">
+  <div
+    :key="selectedLanguage.i18nLocale"
+    class="w-screen h-screen">
     <HeaderBar/>
     <Toast />
     <RouterView />

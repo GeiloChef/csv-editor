@@ -6,6 +6,9 @@
     dataKey="uuid_for_edition"
     editMode="cell"
     stripedRows
+    resizableColumns
+    reorderable-columns
+    columnResizeMode="expand"
     paginator
     :rows="5"
     :rowsPerPageOptions="[5, 10, 20, 50]"
@@ -67,7 +70,9 @@
       </div>
       <EditColumOverlayPanel ref="EditColumnOverlayPanel_Ref" />
     </template>
-    <Column :header="$t('action')">
+    <Column
+      :header="$t('action')"
+      class="border-r-2">
       <template #body="{ data }">
         <div class="flex flex-row gap-2">
           <FontAwesomeIcon
@@ -79,13 +84,15 @@
         </div>
       </template>
     </Column>
-    <Column :header="$t('index')" >
+    <Column
+      :header="$t('index')"
+      class="border-r-2">
       <template #body="{ index }">
         {{ index + 1 + firstItemIndexOnPage }}
       </template>
     </Column>
     <Column
-      class="max-w-72"
+      class="max-w-72 border-r-2"
       v-for="field in currentCsvHeader"
       :field="field.uuid_for_edition"
       :exportHeader="field.label">

@@ -72,6 +72,7 @@
     </template>
     <Column
       :header="$t('action')"
+      :field="'row_actions'"
       class="border-r-2">
       <template #body="{ data }">
         <div class="flex flex-row gap-2">
@@ -86,6 +87,7 @@
     </Column>
     <Column
       :header="$t('index')"
+      :field="'row_index'"
       class="border-r-2">
       <template #body="{ index }">
         {{ index + 1 + firstItemIndexOnPage }}

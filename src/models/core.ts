@@ -85,3 +85,8 @@ export interface FileImportSettings {
   firstRowAreHeaders: boolean
 }
 
+export interface ColumnTypeSelectionOption {
+  name: string,
+  value: ColumnType
+}
+

@@ -34,7 +34,7 @@
         </div>
         <Dropdown
           v-model="currentColumnToEdit.columnType"
-          :options="columnTypesDropdownOptions"
+          :options="columnTypeSelectionOption"
           optionLabel="name"
           optionValue="value"/>
       </div>
@@ -52,9 +52,10 @@
   import { computed, onMounted, type Ref, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
 
-  import { ColumnType } from '@/models/core';
+  import { ColumnType, type ColumnTypeSelectionOption } from '@/models/core';
   import { useColumnEditStore } from '@/stores/columnEditStore';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
+  import { getSelectableColumnTypes } from '@/utils/ColumnUtils';
 
   const columnEditStore = useColumnEditStore();
   const { currentColumnToEdit } = storeToRefs(columnEditStore);
@@ -96,18 +97,7 @@
     newColumnName.value = currentColumnToEdit.value.label;
   };
 
-  const columnTypesDropdownOptions = computed(() => {
-    return [
-      {
-        name: t('number'),
-        value: ColumnType.Number
-      },
-      {
-        name: t('text'),
-        value: ColumnType.Text
-      },
-    ];
-  });
+  const columnTypeSelectionOption: Ref<ColumnTypeSelectionOption[]> = ref(getSelectableColumnTypes());
 
   watch(currentColumnToEdit, () => {
     setupOverlayPanel();

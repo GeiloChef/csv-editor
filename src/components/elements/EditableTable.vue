@@ -6,6 +6,7 @@
     dataKey="uuid_for_edition"
     editMode="cell"
     stripedRows
+    showGridlines
     resizableColumns
     reorderable-columns
     columnResizeMode="expand"
@@ -72,8 +73,7 @@
     </template>
     <Column
       :header="$t('action')"
-      :field="'row_actions'"
-      class="border-r-2">
+      :field="'row_actions'">
       <template #body="{ data }">
         <div class="flex flex-row gap-2">
           <FontAwesomeIcon
@@ -87,14 +87,13 @@
     </Column>
     <Column
       :header="$t('index')"
-      :field="'row_index'"
-      class="border-r-2">
+      :field="'row_index'">
       <template #body="{ index }">
         {{ index + 1 + firstItemIndexOnPage }}
       </template>
     </Column>
     <Column
-      class="max-w-72 border-r-2"
+      class="max-w-72"
       v-for="field in currentCsvHeader"
       :field="field.uuid_for_edition"
       :exportHeader="field.label">
@@ -149,12 +148,15 @@
     type TableRowAction
   } from '@/models/core';
   import { useColumnEditStore } from '@/stores/columnEditStore';
+  import { useColumnsEditDialogStore } from '@/stores/columnsEditDialogStore';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
   import { isValidFileName } from '@/utils/FileUtils';
 
   const columnEditStore = useColumnEditStore();
 
   const { t } = useI18n();
+
+  const columnsEditDialogStore = useColumnsEditDialogStore();
 
   const currentTableStore = useCurrentTableStore();
   const { currentCsvData, currentCsvHeader } = storeToRefs(currentTableStore);
@@ -230,6 +232,11 @@
       label: t('add-new-row'),
       icon: 'diagram-predecessor',
       command: () => currentTableStore.openNewRowDialog()
+    },
+    {
+      label: t('edit-column', 2),
+      icon: 'table-columns',
+      command: () => columnsEditDialogStore.initiateColumnsToEdit()
     },
   ]);
 

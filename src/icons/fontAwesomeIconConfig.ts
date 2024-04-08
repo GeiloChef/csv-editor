@@ -8,6 +8,7 @@ import {
   faDiagramPredecessor,
   faEllipsisVertical,
   faQuestionCircle,
+  faTableColumns,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -19,4 +20,5 @@ library.add(
   faDiagramPredecessor,
   faEllipsisVertical,
   faQuestionCircle,
+  faTableColumns,
 );

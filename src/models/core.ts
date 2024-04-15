@@ -1,4 +1,6 @@
 // @/models/core.ts
+import { TextColumnSettings } from '@/models/columnSettings';
+
 export interface LanguagesObject {
   german: Language,
   english: Language
@@ -21,6 +23,7 @@ export interface CsvHeaderAsJson {
   uuid_for_edition: string,
   label: string,
   columnType: ColumnType,
+  columnTypeSettings_Text: TextColumnSettings
 }
 
 export interface CsvRowAsJson {
@@ -68,8 +71,12 @@ export interface FileImportSettings {
   firstRowAreHeaders: boolean
 }
 
-export interface ColumnTypeSelectionOption {
+export interface DictionaryItem<T> {
+  name: string,
+  value: T
+}
+
+export interface ColumnTypeSelectionOption extends DictionaryItem<ColumnType>{
   name: string,
   value: ColumnType
 }
-

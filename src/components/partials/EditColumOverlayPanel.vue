@@ -38,6 +38,7 @@
           optionLabel="name"
           optionValue="value"/>
       </div>
+      <ColumnTypeCustomization />
     </div>
   </OverlayPanel>
 </template>
@@ -52,6 +53,7 @@
   import { computed, onMounted, type Ref, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
 
+  import ColumnTypeCustomization from '@/components/partials/ColumnTypeCustomization.vue';
   import { ColumnType, type ColumnTypeSelectionOption } from '@/models/core';
   import { useColumnEditStore } from '@/stores/columnEditStore';
   import { useCurrentTableStore } from '@/stores/currentTableStore';

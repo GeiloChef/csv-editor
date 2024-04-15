@@ -1,5 +1,6 @@
 <template>
   <OverlayPanel
+    v-if="currentColumnInfoOfFieldToEdit"
     class="orange-border"
     ref="EditCellOverlayPanel">
     <div class="flex flex-col gap-4">
@@ -7,11 +8,11 @@
         Edit Cell Content
       </div>
       <div>
-        <CellEditTextInput v-if="currentColumnInfo.columnType === ColumnType.Text" />
+        <CellEditTextInput v-if="currentColumnInfoOfFieldToEdit.columnType === ColumnType.Text" />
       </div>
       <div>
         <CellEditNumberInput
-          v-if="currentColumnInfo.columnType === ColumnType.Number"
+          v-if="currentColumnInfoOfFieldToEdit.columnType === ColumnType.Number"
           :minFractionDigits="2"
           :maxFractionDigits="5" />
       </div>
@@ -47,7 +48,7 @@
   import { useCurrentTableStore } from '@/stores/currentTableStore';
 
   const cellEditStore = useCellEditStore();
-  const { cellField } = storeToRefs(cellEditStore);
+  const { cellField, currentColumnInfoOfFieldToEdit } = storeToRefs(cellEditStore);
 
 
   const currentTableStore = useCurrentTableStore();

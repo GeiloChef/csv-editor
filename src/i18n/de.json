@@ -24,6 +24,7 @@
   "index": "Index",
   "insert-new-row": "Neue Reihe Einfügen",
   "insert-row": "Reihe Einfügen",
+  "long-text": "Langer Text",
   "number": "Nummer",
   "process-import": "Datei Import starten",
   "row-added": "Reihe Hinzugefügt",
@@ -33,8 +34,10 @@
   "save": "Speichern",
   "save-changes": "Änderungen speichern",
   "semicolon": "Semicolon",
+  "short-text": "Kurzer Text",
   "table-actions": "Tabelle bearbeiten",
   "test": "test",
   "text": "Text",
+  "text-type": "Text Typ",
   "upload-file": "Datei auswählen"
 }

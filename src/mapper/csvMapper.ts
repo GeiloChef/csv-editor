@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { i18n } from '@/i18n/config';
+import { TextColumnSettings } from '@/models/columnSettings';
 import type { CsvHeaderAsJson, CsvRowAsJson, FileImportSettings, MappedCsvToJson } from '@/models/core';
 import { CellDelimiter, ColumnType } from '@/models/core';
 
@@ -111,7 +112,8 @@ export const mapCsvToJson = (csv: string, importSettings: FileImportSettings): M
     return {
       uuid_for_edition: uuidv4(),
       label: headerName,
-      columnType: ColumnType.Text
+      columnType: ColumnType.Text,
+      columnTypeSettings_Text: new TextColumnSettings()
     };
   });
 

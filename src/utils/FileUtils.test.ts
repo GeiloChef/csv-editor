@@ -1,6 +1,14 @@
 import { describe, expect, test } from 'vitest';
 
-import { getFilenameWithoutExtension, isValidFileName } from '@/utils/FileUtils';
+import type { CsvRowAsJson, FileImportSettings } from '@/models/core';
+import { CellDelimiter, UUID_REGEX } from '@/models/core';
+import {
+  createEmptyRowFromHeaders,
+  getFilenameWithoutExtension,
+  initiateFileImportSettings,
+  isValidFileName
+} from '@/utils/FileUtils';
+import { CsvHeadersMockArray } from '@/vitest-mocks/FileUtils.mocks';
 
 describe('Validate a filename if it matches the conforms the standard filename rules', () => {
   test('Test if regex detects bad filenames', () => {
@@ -55,6 +63,56 @@ describe('Get a filename without extension but respect points set in the filenam
     const fileNameExample3Expectation: string = 'example';
 
     expect(getFilenameWithoutExtension(fileNameExample3)).toBe(fileNameExample3Expectation);
+  });
+});
 
+describe('Create an empty row from headers', () => {
+  const mockedHeader = CsvHeadersMockArray;
+  const rowFromHeaders: CsvRowAsJson = createEmptyRowFromHeaders(mockedHeader);
+  const rowObjectKeys = Object.keys(rowFromHeaders);
+
+  test('Should create a first key for identification', () => {
+    const keyForIdentification = rowObjectKeys.find((key) => key === 'uuid_for_edition');
+
+    expect(keyForIdentification).toBeDefined();
+
+    if(keyForIdentification) {
+      const isKeyUuid = UUID_REGEX.test(rowFromHeaders['uuid_for_edition']);
+
+      expect(isKeyUuid).toBeTruthy;
+    }
+  });
+
+  test('Should use uuids to for the other header keys', () => {
+    for (const key of rowObjectKeys) {
+      if (key === 'uuid_for_edition') continue;
+      const isUuid = UUID_REGEX.test(key);
+
+      expect(isUuid).toBeTruthy();
+    }
+  });
+
+  test('Created keys should match number of columns', () => {
+    const lengthOfColumns = mockedHeader.length;
+    // we deduct one from the length of the created row as it is 'uuid_for_edition' that should not be counted
+    const lengthOfColumnsInCreatedRow = rowObjectKeys.length - 1;
+
+    expect(lengthOfColumnsInCreatedRow).toBe(lengthOfColumns);
+  });
+});
+
+describe('Create initial file import settings', () => {
+  test('Should return a default file import settings object', () => {
+    const importSettingsObject: FileImportSettings = initiateFileImportSettings();
+
+    const expectedImportSettings = {
+      useCustomFileName: false,
+      customFileName: '',
+      cellDelimiter: CellDelimiter.AutoDetection,
+      customDelimiter: '',
+      firstRowAreHeaders: true
+    };
+
+    expect(importSettingsObject).toStrictEqual(expectedImportSettings);
   });
 });

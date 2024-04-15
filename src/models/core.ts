@@ -80,3 +80,9 @@ export interface ColumnTypeSelectionOption extends DictionaryItem<ColumnType>{
   name: string,
   value: ColumnType
 }
+
+/**
+ * This is a RegEx used to validate UUIDs
+ */
+// eslint-disable-next-line no-control-regex
+export const UUID_REGEX: RegExp = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;

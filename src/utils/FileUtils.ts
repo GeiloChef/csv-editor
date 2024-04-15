@@ -94,7 +94,7 @@ export const isValidFileName = (filename: string): boolean => {
 
 /**
  * @description creates an empty object fitting the given headers and scheme of the current table
- * @param headers {string[]}
+ * @param headers {CsvHeaderAsJson[]}
  * @returns CsvRowAsJson - Object matching the scheme of the current table
  */
 export const createEmptyRowFromHeaders = (headers: CsvHeaderAsJson[]): CsvRowAsJson => {

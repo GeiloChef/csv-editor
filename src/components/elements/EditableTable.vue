@@ -4,7 +4,6 @@
     tableStyle="min-width: 50rem"
     :value="currentCsvData"
     dataKey="uuid_for_edition"
-    editMode="cell"
     stripedRows
     showGridlines
     resizableColumns
@@ -115,7 +114,9 @@
         </div>
       </template>
       <template #body="{ data, field }">
-        <div class="truncate">
+        <div
+          class="truncate"
+          @click="triggerEditCellOverlay($event, data, field)">
           {{ data[field] }}
         </div>
       </template>
@@ -125,6 +126,7 @@
           v-model="data[field]" />
       </template>
     </Column>
+    <EditCellOverlayPanel ref="EditCellOverlayPanel_Ref" />
   </DataTable>
 </template>
 
@@ -136,9 +138,10 @@
   import InputText from 'primevue/inputtext';
   import SplitButton from 'primevue/splitbutton';
   import Textarea from 'primevue/textarea';
-  import { computed, type Ref, ref } from 'vue';
+  import { computed, nextTick, type Ref, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
+  import EditCellOverlayPanel from '@/components/partials/EditCellOverlayPanel.vue';
   import EditColumOverlayPanel from '@/components/partials/EditColumOverlayPanel.vue';
   import {
     type CsvHeaderAsJson,
@@ -147,12 +150,14 @@
     type TableAction,
     type TableRowAction
   } from '@/models/core';
+  import { useCellEditStore } from '@/stores/cellEditStore';
   import { useColumnEditStore } from '@/stores/columnEditStore';
   import { useColumnsEditDialogStore } from '@/stores/columnsEditDialogStore';
   import { useCurrentTableStore } from '@/stores/currentTableStore';
   import { isValidFileName } from '@/utils/FileUtils';
 
   const columnEditStore = useColumnEditStore();
+  const cellEditStore = useCellEditStore();
 
   const { t } = useI18n();
 
@@ -245,6 +250,19 @@
     if (EditColumnOverlayPanel_Ref.value) {
       columnEditStore.setCurrentColumnToEdit(column);
       EditColumnOverlayPanel_Ref.value.setOverlayVisibility(true, event);
+    }
+  };
+
+  const EditCellOverlayPanel_Ref: Ref<typeof EditCellOverlayPanel | null> = ref(null);
+  const triggerEditCellOverlay = (event: Event, data: CsvRowAsJson, field: string) => {
+    if (EditCellOverlayPanel_Ref.value) {
+      cellEditStore.setCurrentCellToEdit(data, field);
+      EditCellOverlayPanel_Ref.value.setOverlayVisibility(false, event);
+      nextTick(() => {
+        if (EditCellOverlayPanel_Ref.value) {
+          EditCellOverlayPanel_Ref.value.setOverlayVisibility(true, event);
+        }
+      });
     }
   };
 </script>

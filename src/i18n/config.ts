@@ -4,8 +4,24 @@ import { createI18n } from 'vue-i18n';
 import deutsch from './de.json';
 import english from './en.json';
 
-// import constant with preset information - see core.ts
-import { Languages } from '@/models/core';
+import type { LanguagesObject } from '@/models/core';
+
+export const Languages: LanguagesObject = {
+  german: {
+    key: 'de', // general key that is used in the code
+    name: 'Deutsch', // translated value that is shown to the user
+    momentLocale: 'de', // local that is used by moment.js
+    i18nLocale: 'de', // local that is used by i18n
+    flagCode: 'de' // flag code
+  },
+  english: {
+    key: 'en', // general key that is used in the code
+    name: 'English', // translated value that is shown to the user
+    momentLocale: 'en-gp', // local that is used by moment.js
+    i18nLocale: 'en', // local that is used by i18n
+    flagCode: 'gp' // flag code
+  }
+};
 
 // create object that stores the translated messages
 const messages = {

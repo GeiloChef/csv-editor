@@ -31,7 +31,7 @@
   import Menubar from 'primevue/menubar';
   import SelectButton, { type SelectButtonChangeEvent } from 'primevue/selectbutton';
 
-  import { Languages } from '@/models/core';
+  import { Languages } from '@/i18n/config';
   import { useUserSettingsStore } from '@/stores/userSettings';
 
   const userSettingsStore = useUserSettingsStore();

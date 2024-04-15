@@ -249,7 +249,12 @@
   const triggerEditColumnOverlay = (event: Event, column: CsvHeaderAsJson) => {
     if (EditColumnOverlayPanel_Ref.value) {
       columnEditStore.setCurrentColumnToEdit(column);
-      EditColumnOverlayPanel_Ref.value.setOverlayVisibility(true, event);
+      EditColumnOverlayPanel_Ref.value.setOverlayVisibility(false, event);
+      nextTick(() => {
+        if (EditColumnOverlayPanel_Ref.value) {
+          EditColumnOverlayPanel_Ref.value.setOverlayVisibility(true, event);
+        }
+      });
     }
   };
 
